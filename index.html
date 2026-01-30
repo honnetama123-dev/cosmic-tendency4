@@ -55,7 +55,6 @@
             font-size: 14px; font-weight: bold;
         }
 
-        /* --- 修正：ダークファンタジー×ポップな扉ボタン --- */
         .btn {
             width: 160px;
             padding: 12px;
@@ -86,7 +85,16 @@
             transform: scale(0.95);
         }
 
-        /* --- 既存の結果表示デザイン（維持） --- */
+        /* 音の注意書きスタイル */
+        .sound-notice {
+            font-size: 10px;
+            color: #aaa;
+            margin-top: 8px;
+            text-align: center;
+            width: 160px;
+            text-shadow: 0 0 5px #000;
+        }
+
         #result-display { display: none; width: 100%; }
 
         #res-signs {
@@ -122,7 +130,7 @@
         @media (max-width: 600px) {
             .glass-card { flex-direction: column; padding: 20px; }
             .right-panel { border-left: none; border-top: 2px solid rgba(255,255,255,0.2); padding-top: 20px; padding-left: 0; }
-            input, .btn { width: 100%; }
+            input, .btn, .sound-notice { width: 100%; }
             .tagline { font-size: 1.5rem; }
             .quote-box { font-size: 1.3rem; }
         }
@@ -136,6 +144,7 @@
             <input type="date" id="birth-date">
             <input type="time" id="birth-time">
             <button class="btn" onclick="uranai()">ひそかにのぞく</button>
+            <p class="sound-notice">※クリックすると音が流れます</p>
         </div>
         <div class="right-panel">
             <div id="result-display">
@@ -150,7 +159,6 @@
     <audio id="bgm" src="bgm.mp3" loop></audio>
 
     <script>
-        // --- 144パターンのデータ（全て維持） ---
         const fortuneData = [
 { "sun": "牡羊座", "moon": "牡羊座", "tagline": "即決即行動タイプ", "details": ["思った瞬間に動く", "感情も行動も直球", "後悔は後から"], "quote": "今やろ" },
 { "sun": "牡羊座", "moon": "牡牛座", "tagline": "突っ走りたいのに慎重タイプ", "details": ["行動力と不安が共存", "挑戦したいけど安定も欲しい"], "quote": "やりたいけど怖い" },
@@ -183,7 +191,7 @@
 { "sun": "双子座", "moon": "獅子座", "tagline": "華やかなエンターテイナー", "details": ["自分の話を面白く盛る天才", "目立ちたいけど軽やか", "褒められると調子に乗る"], "quote": "凄いやろ？" },
 { "sun": "双子座", "moon": "乙女座", "tagline": "精密な分析官", "details": ["細かい矛盾も見逃さない", "知識の整理整頓が趣味", "言葉選びがシビア"], "quote": "正確にはこうやで" },
 { "sun": "双子座", "moon": "天秤座", "tagline": "社交界の調整役", "details": ["誰とでも話を合わせられる", "争いを避けるためのトーク術", "決断は周りに任せがち"], "quote": "みんなはどう思う？" },
-{ "sun": "双子座", "moon": "蠍座", "tagline": "鋭い洞察力の探偵", "details": ["表面的な会話の下を探る", "秘密主義なのに情報はしっかり収集", "言葉の端々に毒とユーモアが混じる"], "quote": "ホンマは違うやろ？" },
+{ "sun": "双子座", "moon": "蠍座", "tagline": "鋭い洞察力の探偵", "details": ["表面的な会話の下を探る", "秘密主義なのに情報はしっかり収集", "言葉の端々に毒とユーアが混じる"], "quote": "ホンマは違うやろ？" },
 { "sun": "双子座", "moon": "射手座", "tagline": "思考が宇宙規模の旅人", "details": ["常に新しい世界を求めている", "小さいことは気にしない", "どこへでも飛んでいく"], "quote": "どっか行こう！" },
 { "sun": "双子座", "moon": "山羊座", "tagline": "知的な戦略家", "details": ["無駄な喋りはしない", "有益な人脈作りが得意", "最終的なメリットを計算"], "quote": "で、結論は何？" },
 { "sun": "双子座", "moon": "水瓶座", "tagline": "時代の先を行く変人", "details": ["常識を疑うトリッキーな思考", "誰とも被らない視点", "ネットの世界がホーム"], "quote": "それ普通すぎて変" },
@@ -300,14 +308,12 @@
 
         const zodiacSigns = ["牡羊座", "牡牛座", "双子座", "蟹座", "獅子座", "乙女座", "天秤座", "蠍座", "射手座", "山羊座", "水瓶座", "魚座"];
 
-        // 太陽星座計算
         function getSunSign(m, d) {
             const days = [21, 20, 21, 21, 23, 23, 23, 23, 22, 22, 20, 19];
             const signs = ["山羊座", "水瓶座", "魚座", "牡羊座", "牡牛座", "双子座", "蟹座", "獅子座", "乙女座", "天秤座", "蠍座", "射手座"];
             return d < days[m - 1] ? signs[m - 1] : signs[m % 12];
         }
 
-        // --- 修正：高精度な月星座ロジック ---
         function getMoonSign(birthDate) {
             const baseDate = new Date('1920-01-01T00:00:00Z');
             const diffDays = (birthDate.getTime() - baseDate.getTime()) / (1000 * 60 * 60 * 24);
