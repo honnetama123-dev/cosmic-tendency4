@@ -395,32 +395,38 @@
                 li.innerText = "✦ " + text;
                 list.appendChild(li);
             });
-            
-            if(window.innerWidth <= 600) {
-                document.getElementById('result-display').scrollIntoView({ behavior: 'smooth' });
+            // 画面をスクロールさせる処理
+            if (window.innerWidth <= 600) {
+                const resDisp = document.getElementById('result-display');
+                if (resDisp) resDisp.scrollIntoView({ behavior: 'smooth' });
             }
-        } // ←ここでuranai関数が終わります
+        } // ここでuranai関数を確実に閉じる
 
-        // 4. ★ここがポイント！ ページを開いた瞬間にカウントする★
+        // --- 訪問カウンターの処理 (即時実行関数) ---
         (function() {
-            let count = localStorage.getItem('visitCount') || 0;
-            count = parseInt(count) + 1;
-            localStorage.setItem('visitCount', count);
+            try {
+                let count = localStorage.getItem('visitCount') || 0;
+                count = parseInt(count) + 1;
+                localStorage.setItem('visitCount', count);
 
-            const counterEl = document.getElementById('counter');
-            if (!counterEl) return;
+                const counterEl = document.getElementById('counter');
+                if (!counterEl) return;
 
-            const isLucky = (n) => {
-                if (n === 7) return true;
-                const s = n.toString();
-                return s.length > 1 && s.split('').every(char => char === s[0]);
-            };
+                const isLucky = (n) => {
+                    if (n === 7) return true;
+                    const s = n.toString();
+                    return s.length > 1 && s.split('').every(char => char === s[0]);
+                };
 
-            if (isLucky(count)) {
-                counterEl.innerHTML = `<span class="lucky-hit">✦ Special Visit: ${count} ✦</span>`;
-            } else {
-                counterEl.innerText = `Visit: ${count}`;
+                if (isLucky(count)) {
+                    counterEl.innerHTML = `<span class="lucky-hit">✦ Special Visit: ${count} ✦</span>`;
+                } else {
+                    counterEl.innerText = `Visit: ${count}`;
+                }
+            } catch (e) {
+                console.log("Counter error:", e);
             }
-        })();  
-    </script></body>
-</html>
+        })(); 
+    </script>
+</body>
+</html>           
