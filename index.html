@@ -154,11 +154,31 @@
             .tagline { font-size: 1.5rem; }
             .quote-box { font-size: 1.3rem; }
         }
+/* 訪問カウンターのスタイル */
+        #counter {
+            font-size: 12px;
+            color: #f0a0e0;
+            margin-bottom: 15px;
+            text-align: left;
+            text-shadow: 0 0 5px #000;
+        }
+        /* ゾロ目の時の特別な光る演出 */
+        .lucky-hit {
+            color: #00ffff !important;
+            font-weight: bold;
+            animation: lucky-glow 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes lucky-glow {
+            from { text-shadow: 0 0 5px #fff, 0 0 10px #00ffff; }
+            to { text-shadow: 0 0 10px #fff, 0 0 20px #00ffff, 0 0 30px #00ffff; }
+        }
     </style>
 </head>
 <body>
     <div class="glass-card">
         <div class="left-panel">
+           　<div id="counter"></div>            
+            
             <h1>Cosmic Tendency</h1>
             <p class="creator">created by SHIJIMI KEN</p>
             
@@ -349,7 +369,7 @@
             return zodiacSigns[Math.floor(pos)];
         }
 
-        function uranai() {
+     function uranai() {
             const dVal = document.getElementById('birth-date').value;
             const tVal = document.getElementById('birth-time').value;
             if(!dVal || !tVal) return;
@@ -379,7 +399,28 @@
             if(window.innerWidth <= 600) {
                 document.getElementById('result-display').scrollIntoView({ behavior: 'smooth' });
             }
-        }
-    </script>
-</body>
+        } // ←ここでuranai関数が終わります
+
+        // 4. ★ここがポイント！ ページを開いた瞬間にカウントする★
+        (function() {
+            let count = localStorage.getItem('visitCount') || 0;
+            count = parseInt(count) + 1;
+            localStorage.setItem('visitCount', count);
+
+            const counterEl = document.getElementById('counter');
+            if (!counterEl) return;
+
+            const isLucky = (n) => {
+                if (n === 7) return true;
+                const s = n.toString();
+                return s.length > 1 && s.split('').every(char => char === s[0]);
+            };
+
+            if (isLucky(count)) {
+                counterEl.innerHTML = `<span class="lucky-hit">✦ Special Visit: ${count} ✦</span>`;
+            } else {
+                counterEl.innerText = `Visit: ${count}`;
+            }
+        })();  
+    </script></body>
 </html>
