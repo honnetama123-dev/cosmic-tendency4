@@ -3,125 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cosmic Tendency</title>
+    <title>Cosmic Tendency | Neon Magic</title>
+    <!-- フォントの読み込み -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        /* --- 基本デザイン（維持） --- */
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-cyan: #00ffff;
+            --magic-purple: #9d00ff;
+            /* 背景を完全に透明に設定 */
+            --glass-bg: transparent; 
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-image: url('forest.png'); 
+            background-image: url('forest.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-color: #0d0514;
             color: #ffffff;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px; 
+            padding: 20px;
+            overflow-x: hidden;
         }
 
         .glass-card {
-            background: transparent; 
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-            padding: 25px;
+            background: var(--glass-bg);
+            /* すりガラス効果(blur)を削除して完全透明に */
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            /* 枠線と影を削除 */
+            border: none;
+            box-shadow: none;
+            padding: 20px;
             width: 100%;
-            max-width: 700px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            max-width: 850px;
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 30px;
+            position: relative;
+            animation: card-float 6s ease-in-out infinite;
         }
 
-        .left-panel { flex: 0.7; min-width: 180px; } 
-        .right-panel { flex: 1.3; min-width: 280px; border-left: 2px solid rgba(255,255,255,0.2); padding-left: 20px; }
+        @keyframes card-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
 
-        h1 { font-size: 1.5rem; color: #f0a0e0; text-shadow: 0 0 10px #000; margin-bottom: 5px; }
-        .creator { font-size: 0.6rem; color: #ddd; margin-bottom: 15px; }
-        .input-label { display: block; font-size: 11px; color: #f0a0e0; margin-bottom: 4px; font-weight: bold; }
+        .left-panel { flex: 0.8; min-width: 220px; }
+        .right-panel { 
+            flex: 1.2; 
+            min-width: 300px; 
+            border-left: 1px solid rgba(255,255,255,0.2); 
+            padding-left: 30px;
+        }
+
+        h1 { 
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem; 
+            background: linear-gradient(to bottom, #fff, var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(0,255,255,0.5));
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+
+        .creator { font-size: 0.7rem; color: rgba(255,255,255,0.7); margin-bottom: 30px; letter-spacing: 3px; }
+
+        .input-group { margin-bottom: 20px; width: 100%; }
+        .input-label { display: block; font-size: 11px; color: var(--neon-cyan); margin-bottom: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
 
         input {
-            width: 160px; display: block; padding: 8px 12px; border-radius: 6px; border: 1px solid #777;
-            background: rgba(0, 0, 0, 0.7); color: #fff; margin-bottom: 12px; font-size: 14px;
+            width: 100%; 
+            display: block;
+            padding: 12px 15px; 
+            border-radius: 12px; 
+            border: 1px solid rgba(255,255,255,0.4);
+            background: rgba(0, 0, 0, 0.6); /* 入力しやすさのため入力欄のみ透過黒 */
+            color: #fff; 
+            font-size: 16px;
+            transition: all 0.3s;
+            outline: none;
         }
 
-        /* --- メインボタン --- */
+        input:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
         .btn {
-            width: 160px;
-            padding: 12px;
-            margin-top: 10px;
-            border-radius: 50px; 
-            background: rgba(20, 10, 30, 0.6); 
-            border: 1px solid rgba(188, 19, 254, 0.6); 
-            color: #f0a0e0; 
-            box-shadow: 0 0 15px rgba(188, 19, 254, 0.3), inset 0 0 10px rgba(188, 19, 254, 0.2);
-            cursor: pointer;
+            width: 100%;
+            padding: 16px;
+            margin-top: 20px;
+            border-radius: 15px;
+            background: linear-gradient(45deg, var(--magic-purple), var(--neon-pink));
+            border: none;
+            color: #fff;
             font-weight: bold;
-            font-size: 14px;
-            letter-spacing: 2px;
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 16px;
+            letter-spacing: 3px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+            transition: all 0.3s;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(5px); 
-            animation: button-pulse 3s infinite; 
-        }
-
-        @keyframes button-pulse {
-            0% { box-shadow: 0 0 10px rgba(188, 19, 254, 0.3); }
-            50% { box-shadow: 0 0 25px rgba(188, 19, 254, 0.6); border-color: rgba(188, 19, 254, 1); }
-            100% { box-shadow: 0 0 10px rgba(188, 19, 254, 0.3); }
         }
 
         .btn:hover {
-            color: #fff; border-color: #00ffff;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.8), inset 0 0 15px rgba(0, 255, 255, 0.4);
-            transform: translateY(-3px); background: rgba(40, 20, 60, 0.8);
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+            filter: brightness(1.2);
         }
 
-        .sound-notice {
-            font-size: 10px; color: #aaa; margin-top: 8px; text-align: center; width: 160px; text-shadow: 0 0 5px #000;
-        }
-
-        /* --- リセットボタン --- */
-        .btn-reset {
-            width: 160px;
-            padding: 8px;
-            margin-top: 25px; /* 少し離しました */
-            border-radius: 50px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            font-size: 11px;
-            letter-spacing: 1px;
+        .music-control { margin-top: 25px; display: flex; align-items: center; gap: 15px; }
+        .sound-toggle {
+            background: rgba(0, 0, 0, 0.5); border: 2px solid var(--neon-cyan); color: var(--neon-cyan);
+            width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+            display: flex; justify-content: center; align-items: center; font-size: 20px;
             transition: all 0.3s;
         }
+        .sound-toggle.muted { border-color: #555; color: #555; }
+        .sound-toggle:hover { background: var(--neon-cyan); color: #000; box-shadow: 0 0 15px var(--neon-cyan); }
 
-        .btn-reset:hover {
-            border-color: rgba(255, 255, 255, 0.8);
-            color: #fff;
-            background: rgba(255, 255, 255, 0.1);
+        .sound-notice { font-size: 11px; color: #fff; text-shadow: 0 0 5px #000; }
+
+        .btn-reset {
+            width: 100%; padding: 10px; margin-top: 30px; border-radius: 10px;
+            background: transparent; border: 1px solid rgba(255,255,255,0.3);
+            color: #fff; cursor: pointer; font-size: 12px;
+            transition: all 0.3s;
+            text-shadow: 0 0 5px #000;
         }
 
-        #result-display { display: none; width: 100%; }
-        #res-signs { color: #f0a0e0; font-size: 1.1rem; font-weight: bold; text-shadow: 0 0 10px #000; }
-        .tagline { color: #ffeb3b; font-size: 1.7rem; margin-top: 10px; font-weight: bold; text-shadow: 2px 2px 4px #000; }
-        .quote-box { border-left: 5px solid #ff69b4; padding: 15px; margin: 15px 0; background: rgba(0, 0, 0, 0.6); font-size: 1.5rem; color: #ffeb3b; }
-        .details-list { font-size: 1.1rem; list-style: none; color: #ffffff; }
-        .details-list li { margin-bottom: 10px; }
-
-        @media (max-width: 600px) {
-            .glass-card { flex-direction: column; }
-            .right-panel { border-left: none; border-top: 2px solid rgba(255,255,255,0.2); padding-top: 20px; }
-            input, .btn, .btn-reset, .sound-notice { width: 100%; }
+        /* --- 結果表示 --- */
+        #result-display { display: none; animation: result-in 0.8s ease-out; }
+        @keyframes result-in {
+            from { opacity: 0; transform: translateY(10px); filter: blur(5px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
 
-        #counter { font-size: 12px; color: #f0a0e0; margin-bottom: 15px; }
+        #res-signs { color: var(--neon-cyan); font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; display: block; text-shadow: 0 0 10px #000; }
+        .tagline { 
+            font-size: 1.8rem; color: #fff; margin-bottom: 20px; line-height: 1.2;
+            text-shadow: 0 0 15px var(--neon-pink), 2px 2px 4px #000;
+        }
+        .quote-box { 
+            background: rgba(0, 0, 0, 0.6); border-left: 4px solid var(--neon-cyan);
+            padding: 20px; margin: 25px 0; font-size: 1.5rem; color: #ffeb3b;
+            text-shadow: 1px 1px 2px #000;
+        }
+        .details-list { list-style: none; }
+        .details-list li { margin-bottom: 15px; color: #fff; font-size: 1.1rem; display: flex; align-items: center; text-shadow: 1px 1px 3px #000; }
+        .details-list li::before { content: '✦'; color: var(--neon-cyan); margin-right: 12px; }
+
+        /* --- モバイル対応修正 --- */
+        @media (max-width: 700px) {
+            .glass-card { 
+                flex-direction: column; 
+                padding: 20px; 
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .left-panel { 
+                min-width: 0; 
+                width: 100%; 
+                padding: 0;
+            }
+            .right-panel { 
+                min-width: 0;
+                width: 100%;
+                border-left: none; 
+                border-top: 1px solid rgba(255,255,255,0.3); 
+                padding-left: 0; 
+                padding-top: 30px; 
+            }
+            input, .btn, .btn-reset {
+                width: 100%; 
+                box-sizing: border-box;
+            }
+            h1 { font-size: 1.8rem; }
+        }
+
+        #counter { font-size: 12px; color: var(--neon-pink); margin-bottom: 10px; font-weight: bold; text-shadow: 0 0 5px #000; }
     </style>
 </head>
 <body>
@@ -130,17 +203,30 @@
             <div id="counter"></div>            
             <h1>Cosmic Tendency</h1>
             <p class="creator">created by SHIJIMI KEN</p>
-            <label class="input-label">生年月日</label>
-            <input type="date" id="birth-date">
-            <label class="input-label">生まれた時間</label>
-            <input type="time" id="birth-time">
+            
+            <div class="input-group">
+                <label class="input-label">Birth Date</label>
+                <input type="date" id="birth-date">
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">Birth Time</label>
+                <input type="time" id="birth-time">
+            </div>
+            
             <button class="btn" onclick="uranai()">ひそかにのぞく</button>
-            <p class="sound-notice">※クリックすると音が流れます</p>
+            
+            <div class="music-control">
+                <button id="toggle-btn" class="sound-toggle" onclick="toggleMusic()">♪</button>
+                <div class="sound-notice">Atmospheric Sound</div>
+            </div>
+
             <button class="btn-reset" onclick="resetForm()">星を並べ直す</button>
         </div>
+        
         <div class="right-panel">
             <div id="result-display">
-                <p id="res-signs"></p>
+                <span id="res-signs"></span>
                 <h2 class="tagline" id="res-tagline"></h2>
                 <div class="quote-box" id="res-quote"></div>
                 <ul id="res-details" class="details-list"></ul>
@@ -181,7 +267,7 @@
             { "sun": "双子座", "moon": "双子座", "tagline": "歩く検索エンジン", "details": ["常に何かを調べている", "同時に3つくらいのことをこなす", "深掘りより広さ重視"], "quote": "あ、それ知ってる！" },
             { "sun": "双子座", "moon": "蟹座", "tagline": "愛嬌のある聞き上手", "details": ["相手の感情を読み取って喋る", "仲間内のニュースが大好き", "実はかなり心配性"], "quote": "ここだけの話やけど" },
             { "sun": "双子座", "moon": "獅子座", "tagline": "華やかなエンターテイナー", "details": ["自分の話を面白く盛る天才", "目立ちたいけど軽やか", "褒められると調子に乗る"], "quote": "凄いやろ？" },
-            { "sun": "双子座", "moon": "乙女座", "tagline": "精密な分析官", "details": ["細かい矛盾も見逃さない", "知識の整理整頓が趣味", "言葉選びがシビア"], "quote": "正確にはこうやで" },
+            { "sun": "雙子座", "moon": "乙女座", "tagline": "精密な分析官", "details": ["細かい矛盾も見逃さない", "知識の整理整頓が趣味", "言葉選びがシビア"], "quote": "正確にはこうやで" },
             { "sun": "双子座", "moon": "天秤座", "tagline": "社交界の調整役", "details": ["誰とでも話を合わせられる", "争いを避けるためのトーク術", "決断は周りに任せがち"], "quote": "みんなはどう思う？" },
             { "sun": "双子座", "moon": "蠍座", "tagline": "鋭い洞察力の探偵", "details": ["表面的な会話の下を探る", "秘密主義なのに情報はしっかり収集", "言葉の端々に毒とユーモアが混じる"], "quote": "ホンマは違うやろ？" },
             { "sun": "双子座", "moon": "射手座", "tagline": "思考が宇宙規模の旅人", "details": ["常に新しい世界を求めている", "小さなことは気にしない", "どこへでも飛んでいく"], "quote": "どっか行こう！" },
@@ -207,7 +293,7 @@
             { "sun": "獅子座", "moon": "獅子座", "tagline": "圧倒的なカリスマ", "details": ["存在そのものがエンターテインメント", "自分を信じる力が最強", "妥協はプライドが許さない"], "quote": "私がルール" },
             { "sun": "獅子座", "moon": "乙女座", "tagline": "陰で努力する表現者", "details": ["見えないところで猛特訓", "「完璧な自分」を見せたい", "自己評価が意外と厳しめ"], "quote": "完璧やろ？" },
             { "sun": "獅子座", "moon": "天秤座", "tagline": "愛嬌たっぷりのスター", "details": ["華やかで誰からも好かれたい", "周りからの見え方を計算する", "褒め言葉が最高の栄養源"], "quote": "素敵に見える？" },
-            { "sun": "獅子座", "moon": "蠍座", "tagline": "内に情熱を秘めた支配者", "details": ["黙っていても漏れ出る威圧感", "自分の信念を曲げるくらいなら死ぬ", "認めた相手には深い敬意を払う"], "quote": "見てなよ" },
+            { "sun": "獅子座", "moon": "蠍座", "tagline": "内に情熱を秘めた支配者", "details": ["黙っていても醸し出される威圧感", "自分の信念を曲げるくらいなら死ぬ", "認めた相手には深い敬意を払う"], "quote": "見てなよ" },
             { "sun": "獅子座", "moon": "射手座", "tagline": "スケールの大きな冒険家", "details": ["夢は大きく、行動は大胆", "常にワクワクする方へ進む", "小さな枠には収まらない"], "quote": "次は世界や" },
             { "sun": "獅子座", "moon": "山羊座", "tagline": "野心的な実力者", "details": ["頂点を目指して着実に歩む", "権威や地位を重んじる", "責任感の強いリーダー"], "quote": "勝つのは私" },
             { "sun": "獅子座", "moon": "水瓶座", "tagline": "唯一無二の個性派", "details": ["誰とも被らないことが誇り", "反抗心さえも自分の魅力にする", "型にハマるのが一番の苦痛"], "quote": "普通は嫌や" },
@@ -322,6 +408,8 @@
             return zodiacSigns[Math.floor(lon / 30)];
         }
 
+        let isMutedManually = false;
+
         function uranai() {
             const dVal = document.getElementById('birth-date').value;
             const tVal = document.getElementById('birth-time').value;
@@ -329,8 +417,12 @@
             const birth = new Date(`${dVal}T${tVal}`);
             const sun = getSunSign(birth);
             const moon = getMoonSign(birth);
+            
             const music = document.getElementById('bgm');
-            if(music) music.play().catch(() => {});
+            if(music && !isMutedManually) {
+                music.play().catch(() => {});
+            }
+
             const data = fortuneData.find(item => item.sun === sun && item.moon === moon) || {tagline:"神秘の境界線", details:["特別な星の配置"], quote:"そのままの君で"};
             document.getElementById('result-display').style.display = 'block';
             document.getElementById('res-signs').innerText = `${sun} × ${moon}`;
@@ -340,11 +432,27 @@
             list.innerHTML = "";
             data.details.forEach(text => {
                 const li = document.createElement('li');
-                li.innerText = "✦ " + text;
+                li.innerText = text;
                 list.appendChild(li);
             });
-            if (window.innerWidth <= 600) {
+            if (window.innerWidth <= 700) {
                 document.getElementById('result-display').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function toggleMusic() {
+            const music = document.getElementById('bgm');
+            const btn = document.getElementById('toggle-btn');
+            if (music.paused) {
+                isMutedManually = false;
+                music.play().catch(() => {});
+                btn.classList.remove('muted');
+                btn.innerText = "♪";
+            } else {
+                isMutedManually = true;
+                music.pause();
+                btn.classList.add('muted');
+                btn.innerText = "×";
             }
         }
 
@@ -354,6 +462,17 @@
             document.getElementById('result-display').style.display = 'none';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        document.addEventListener("visibilitychange", () => {
+            const music = document.getElementById('bgm');
+            if (document.hidden) {
+                music.pause();
+            } else {
+                if (!isMutedManually && document.getElementById('result-display').style.display === 'block') {
+                    music.play().catch(() => {});
+                }
+            }
+        });
 
         (function() {
             try {
